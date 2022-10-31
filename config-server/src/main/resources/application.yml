@@ -12,7 +12,6 @@ spring:
           uri: https://github.com/uuserless/ms-config-properties/
           search-paths:
             - "/{application}/{profile}"
-          default-label: main
 
 eureka:
   client:

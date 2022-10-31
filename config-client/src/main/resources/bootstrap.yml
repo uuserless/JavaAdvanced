@@ -11,6 +11,11 @@ spring:
         service-id: config-server
       server:
         bootstrap: true
+  zipkin:
+    baseUrl: http://localhost:9411/
+    sleuth:
+      sampler:
+        probability: 100
 
 eureka:
   client:
