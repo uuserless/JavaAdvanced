@@ -6,9 +6,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class BookGenerator {
 
-    private final Random random = new Random();
+    private Random random = new Random();
 
     public Book createBook() {
         int id = random.ints(1, 1000).findFirst().getAsInt();
