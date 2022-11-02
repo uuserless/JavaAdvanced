@@ -20,6 +20,14 @@ spring:
           destination: create-book-channel
         checkBook-out-0:
           destination: check-book-channel
+    bus:
+      id: check-book-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   client:

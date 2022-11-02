@@ -18,6 +18,14 @@ spring:
       bindings:
         acceptBook-in-0:
           destination: check-book-channel
+    bus:
+      id: store-book-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   client:

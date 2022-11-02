@@ -1,17 +1,26 @@
 server:
   port: 8888
+
 spring:
   application:
     name: config-server
   profiles:
     active: git
   cloud:
+    bus:
+      id: config-server
     config:
       server:
         git:
           uri: https://github.com/uuserless/ms-config-properties/
           search-paths:
             - "/{application}/{profile}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   client:

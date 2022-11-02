@@ -2,17 +2,15 @@ package com.example.service;
 
 import com.example.model.Book;
 import java.util.function.Supplier;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@AllArgsConstructor
 public class CreateBookService {
 
-    private BookGenerator bookGen;
+    private BookGenerator bookGen = new BookGenerator();
 
     @Bean
     public Supplier<Book> sendBook() {

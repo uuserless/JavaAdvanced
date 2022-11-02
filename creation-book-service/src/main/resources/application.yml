@@ -15,16 +15,20 @@ spring:
     function:
       definition: sendBook
     stream:
-      kafka:
-        binder:
-          configuration:
-            commit:
-              interval:
-                ms: 10000
       bindings:
         sendBook-out-0:
           destination: create-book-channel
+    bus:
+      id: creation-book-service
+  integration:
+    poller:
+      fixed-delay: 10000
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   client:
