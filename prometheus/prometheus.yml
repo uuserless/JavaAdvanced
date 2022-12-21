@@ -1,0 +1,35 @@
+global:
+  scrape_interval:     10s
+  evaluation_interval: 10s
+
+scrape_configs:
+  - job_name: 'discovery-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['discovery-server:8761']
+        labels:
+          application: 'Discovery Server'
+  - job_name: 'config-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['config-server:8888']
+        labels:
+          application: 'Config Server'
+  - job_name: 'api-gateway'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['api-gateway:8766']
+        labels:
+          application: 'API Gateway'
+  - job_name: 'client-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['client-service:8082']
+        labels:
+          application: 'Client Service'
+  - job_name: 'book-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['book-service:8083']
+        labels:
+          application: 'Book Service'

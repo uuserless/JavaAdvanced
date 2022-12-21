@@ -90,3 +90,36 @@ services:
       - zipkin
       - mongo
       - discovery-server
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.41.0
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    expose:
+      - "9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - api-gateway
+      - discovery-server
+      - config-server
+      - client-service
+      - book-service
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:9.3.2
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password

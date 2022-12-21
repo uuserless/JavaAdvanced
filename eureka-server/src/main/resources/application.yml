@@ -31,3 +31,9 @@ eureka:
     lease-expiration-duration-in-seconds: 70
     metadata-map:
       zone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
