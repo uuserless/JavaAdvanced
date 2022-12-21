@@ -8,7 +8,7 @@ spring:
       probability: 100
 
 server:
-  port: ${PORT:8761}
+  port: 8761
 
 eureka:
   shouldUseDns: true
@@ -16,7 +16,7 @@ eureka:
     expected-client-renewal-interval-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+      defaultZone: http://localhost:8761/eureka/
     registerWithEureka: false
     fetchRegistry: false
     log-delta-diff: false
@@ -30,4 +30,4 @@ eureka:
     hostname: my-eureka-server.com
     lease-expiration-duration-in-seconds: 70
     metadata-map:
-      zone: http://${eureka.instance.hostname}:${server.port}/eureka
+      zone: http://localhost:8761/eureka/

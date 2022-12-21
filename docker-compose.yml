@@ -1,0 +1,92 @@
+---
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    expose:
+      - "27017"
+    volumes:
+      - ./mongo-data:/data/db
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    expose:
+      - "9411"
+
+  api-gateway:
+    container_name: api-gateway
+    image: uuserless/api-gateway:latest
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin:9411/
+    ports:
+      - "8766:8766"
+    expose:
+      - "8766"
+    depends_on:
+      - zipkin
+      - discovery-server
+
+  discovery-server:
+    container_name: discovery-server
+    image: uuserless/eureka-server:latest
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin:9411/
+    ports:
+      - "8761:8761"
+    expose:
+      - "8761"
+    depends_on:
+      - zipkin
+
+  config-server:
+    container_name: config-server
+    image: uuserless/config-server:latest
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka
+    ports:
+      - "8888:8888"
+    expose:
+      - "8888"
+    depends_on:
+      - discovery-server
+
+  client-service:
+    container_name: client-service
+    image: uuserless/client-service:latest
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin:9411/
+      book-service.url: http://book-service:8083/
+    ports:
+      - "8082:8082"
+    expose:
+      - "8082"
+    depends_on:
+      - zipkin
+      - discovery-server
+      - book-service
+
+  book-service:
+    container_name: book-service
+    image: uuserless/book-service:latest
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin:9411/
+      spring.data.mongodb.host: mongo
+    ports:
+      - "8083:8083"
+    expose:
+      - "8083"
+    depends_on:
+      - zipkin
+      - mongo
+      - discovery-server
