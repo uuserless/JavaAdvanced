@@ -16,4 +16,4 @@ api-gateway -> client-service -> book-service -> mongodb
 
 http://localhost:8766/client/getAllBooksByFeignClient
 
-http://localhos:8766/client/getAllBooksByRestTemplate
+http://localhos:8766/client/getAllBooksByRestTemplate# api-gateway
